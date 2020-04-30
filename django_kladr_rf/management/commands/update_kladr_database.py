@@ -56,7 +56,7 @@ class Command(BaseCommand):
                 }
             )
 
-    # Возвращает список регионов и городовы
+    # Возвращает список регионов и городов
     def fetch_data(self):
         page_content = self.fetch_content_from_url('https://kladr-rf.ru/')
         regions_raw_list = re.findall(
