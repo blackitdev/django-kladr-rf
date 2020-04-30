@@ -3,7 +3,7 @@ import requests
 
 from django.core.management.base import BaseCommand
 
-from models import KLADRRegion, KLADRCity, KLADRDistrict
+from ...models import KLADRRegion, KLADRCity, KLADRDistrict
 
 
 class Command(BaseCommand):
