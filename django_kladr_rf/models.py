@@ -7,6 +7,8 @@ class KLADRBase(models.Model):
     post_index = models.CharField(max_length=32, verbose_name='Почтовый индекс')
     code_okato = models.CharField(max_length=32, verbose_name='Код ОКАТО')
     tax_code = models.CharField(max_length=32, verbose_name='Налоговый код')
+    latitude = models.FloatField(verbose_name='Широта', null=True)
+    longitude = models.FloatField(verbose_name='Долгота', null=True)
 
     class Meta:
         abstract = True
