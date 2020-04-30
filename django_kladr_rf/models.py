@@ -7,8 +7,6 @@ class KLADRBase(models.Model):
     post_index = models.CharField(max_length=32, verbose_name='Почтовый индекс')
     code_okato = models.CharField(max_length=32, verbose_name='Код ОКАТО')
     tax_code = models.CharField(max_length=32, verbose_name='Налоговый код')
-    latitude = models.FloatField(verbose_name='Широта', null=True)
-    longitude = models.FloatField(verbose_name='Долгота', null=True)
 
     class Meta:
         abstract = True
@@ -29,6 +27,8 @@ class KLADRCity(KLADRBase):
     region = models.ForeignKey(
         KLADRRegion, on_delete=models.CASCADE, verbose_name='Регион'
     )
+    latitude = models.FloatField(verbose_name='Широта', null=True)
+    longitude = models.FloatField(verbose_name='Долгота', null=True)
 
     class Meta:
         verbose_name = 'город кладр'
@@ -42,6 +42,8 @@ class KLADRDistrict(KLADRBase):
     region = models.ForeignKey(
         KLADRRegion, on_delete=models.CASCADE, verbose_name='Регион'
     )
+    latitude = models.FloatField(verbose_name='Широта', null=True)
+    longitude = models.FloatField(verbose_name='Долгота', null=True)
 
     class Meta:
         verbose_name = 'район кладр'

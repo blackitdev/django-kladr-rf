@@ -1,5 +1,6 @@
 import re
 import requests
+import os
 
 from django.core.management.base import BaseCommand
 
@@ -8,11 +9,25 @@ from ...models import KLADRRegion, KLADRCity, KLADRDistrict
 
 class Command(BaseCommand):
     help = 'Common Report command'
+    coordinates_map = {}
 
     def handle(self, *args, **options):
+        self.read_coordinates_map()
         parsed_data = self.fetch_data()
         self.update_data_in_db(parsed_data)
         print(parsed_data)
+
+    def read_coordinates_map(self):
+        my_path = os.path.abspath(os.path.dirname(__file__))
+        path = os.path.join(my_path, "../../assets/cities_list.csv")
+        with open(path) as file:
+            # пропускаем первую строчку
+            _ = file.readline()
+            line = file.readline()
+            while line:
+                data = line.split(',')
+                self.coordinates_map[data[10]] = data[21], data[22]
+                line = file.readline()
 
     def update_data_in_db(self, parsed_data):
         for region_data in parsed_data:
@@ -41,6 +56,8 @@ class Command(BaseCommand):
                     'code_okato': city_data['code_okato'],
                     'tax_code': city_data['tax_code'],
                     'code_kladr': city_data['code_kladr'],
+                    'latitude': city_data.get('lat'),
+                    'longitude': city_data.get('lon'),
                 }
             )
 
@@ -53,6 +70,8 @@ class Command(BaseCommand):
                     'code_okato': district_data['code_okato'],
                     'tax_code': district_data['tax_code'],
                     'code_kladr': district_data['code_kladr'],
+                    'latitude': district_data.get('lat'),
+                    'longitude': district_data.get('lon'),
                 }
             )
 
@@ -106,6 +125,11 @@ class Command(BaseCommand):
         page_content = self.fetch_content_from_url(url)
         city_data = self.parse_common_info(page_content)
         city_data['name'] = self.replace_prefix(name)
+
+        geo_info = self.coordinates_map.get(city_data['name'])
+        if geo_info:
+            city_data['lat'], city_data['lon'] = geo_info
+
         return city_data
 
     @staticmethod
