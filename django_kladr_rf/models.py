@@ -13,7 +13,7 @@ class KLADRBase(models.Model):
 
 
 class KLADRRegion(KLADRBase):
-    region_code = models.CharField(max_length=32)
+    region_code = models.CharField(max_length=32, verbose_name='Код региона')
 
     class Meta:
         verbose_name = 'регион кладр'

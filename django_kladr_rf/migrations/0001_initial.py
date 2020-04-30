@@ -21,7 +21,7 @@ class Migration(migrations.Migration):
                 ('post_index', models.CharField(max_length=32, verbose_name='Почтовый индекс')),
                 ('code_okato', models.CharField(max_length=32, verbose_name='Код ОКАТО')),
                 ('tax_code', models.CharField(max_length=32, verbose_name='Налоговый код')),
-                ('region_code', models.CharField(max_length=32)),
+                ('region_code', models.CharField(max_length=32, verbose_name='Код региона')),
             ],
             options={
                 'verbose_name': 'регион кладр',

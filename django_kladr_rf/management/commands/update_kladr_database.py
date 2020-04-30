@@ -16,7 +16,7 @@ class Command(BaseCommand):
 
     def update_data_in_db(self, parsed_data):
         for region_data in parsed_data:
-            region = KLADRRegion.objects.update_or_create(
+            region, _ = KLADRRegion.objects.update_or_create(
                 name=region_data['name'], defaults={
                     'region_code': region_data['region_code'],
                     'post_index': region_data['post_index'],
